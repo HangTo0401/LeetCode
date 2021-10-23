@@ -3,6 +3,7 @@ import java.util.HashMap;
 public class TwoSum {
 
     /**
+     * EASY
      * 1. Given an array of integers nums and an integer target
      * Return index of the two numbers such that they add up to target number.
      *
