@@ -1,6 +1,6 @@
 import java.util.Stack;
 
-public class TwoNumbersInLinkedList {
+public class SumTwoNumbersInLinkedList {
 
     /**
      * MEDIUM
@@ -47,6 +47,7 @@ public class TwoNumbersInLinkedList {
          return head;
     }
 
+    // Inserts a new Node at the end of the list
     public static ListNode insertNewNodeAtEnd(ListNode head, int new_data) {
         /* creates a new node */
         ListNode new_node = new ListNode(new_data);
@@ -106,7 +107,15 @@ public class TwoNumbersInLinkedList {
         return stack;
     }
 
-    // Add two numbers in linked list using Carry
+    /**
+     * 1. The second solution is adding two numbers in linked list using Carry
+     * We create reverseNode function to reverse 2 linked lists
+     * We create 2 stacks to store the value of 2 reverse linked lists
+     *
+     * @param l1
+     * @param l2
+     * @return ListNode
+     * */
     public ListNode addTwoNumbersUsingCarry(ListNode l1, ListNode l2) {
         if(l1 == null) return l2;
         if(l2 == null) return l1;
@@ -135,7 +144,15 @@ public class TwoNumbersInLinkedList {
         return reverseNode(head);
     }
 
-    // Add two numbers in linked list without using Carry
+    /**
+     * 2. The second solution is adding two numbers in linked list without using Carry
+     * We create reverseNode function to reverse 2 linked lists
+     * We create 2 stacks to store the value of 2 reverse linked lists
+     *
+     * @param l1
+     * @param l2
+     * @return ListNode
+     * */
     public ListNode addTwoNumbersWithoutCarry(ListNode l1, ListNode l2) {
         if(l1 == null) return l2;
         if(l2 == null) return l1;
@@ -168,9 +185,71 @@ public class TwoNumbersInLinkedList {
         return reverseNode(head);
     }
 
-    public static void main(String[] args) {
-        TwoNumbersInLinkedList twoNumbersInLinkedList = new TwoNumbersInLinkedList();
+    /**
+     * 3. The third solution is Elementary Math
+     * This is answered solution of this problem of Leetcode
+     *
+     * The pseudocode is as following:
+     * •	Initialize current node to dummy head of the returning list.
+     * •	Initialize carry to 0.
+     * •	Initialize p and q to head of l1 and l2 respectively.
+     * •	Loop through lists l1 and l2 until you reach both ends.
+     *      o	Set x to node p's value. If p has reached the end of l1, set to 00.
+     *      o	Set y to node q's value. If q has reached the end of l2, set to 00.
+     *      o	Set sum = x + y + carry
+     *      o	Update carry = sum / 10
+     *      o	Create a new node with the digit value of (sum mod 10) and set it to current node's next, then set current to current.next.
+     *      o	Set p = p.next and q = q.next.
+     * •	Check if carry = 1, if so append a new node with digit 1 to the returning list.
+     * •	Return dummy head's next node.
+     *
+     * Complexity Analysis
+     *
+     * Time complexity : O(\max(m, n))O(max(m,n)). Assume that mm and nn represents the length of l1l1 and l2l2 respectively,
+     * the algorithm above iterates at most \max(m, n)max(m,n) times.
+     * Space complexity : O(\max(m, n))O(max(m,n)). The length of the new list is at most \max(m,n) + 1max(m,n)+1.
+     *
+     * Follow up
+     * What if the the digits in the linked list are stored in non-reversed order? For example:
+     * (3→4→2) + (4→6→5) = 8→0→7
+     * */
+    public ListNode sumLinkedList(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(0);
 
+        // Initialize current node to dummy head of the returning list.
+        ListNode current = dummyHead;
+
+        // Initialize carry to 0.
+        int carry = 0;
+
+        // Initialize p and q to head of l1 and l2 respectively.
+        ListNode p = l1;
+        ListNode q = l2;
+
+        while (p != null && q != null) {
+            int x = (p != null) ? (int) p.val : 0;
+            int y = (q != null) ? (int) q.val : 0;
+            int sum = x + y + carry;
+            carry = sum / 10;
+
+            int digit = sum % 10;
+            ListNode newNode = new ListNode(digit);
+            current.next = newNode;
+            current = current.next;
+            if (p != null) p = p.next;
+            if (q != null) q = q.next;
+        }
+
+        if (carry > 0) {
+            current.next = new ListNode(carry);
+        }
+        return dummyHead.next;//get rid of dummyHead 0
+    }
+
+    public static void main(String[] args) {
+        SumTwoNumbersInLinkedList solution = new SumTwoNumbersInLinkedList();
+
+        System.out.print("======USING CARRY======\n");
         ListNode l1 = new ListNode(2);
         l1 = insertNewNodeAtEnd(l1, 4);
         l1 = insertNewNodeAtEnd(l1, 3);
@@ -186,8 +265,45 @@ public class TwoNumbersInLinkedList {
         System.out.print("============\n");
 
         ListNode result = null;
-        result = twoNumbersInLinkedList.addTwoNumbersUsingCarry(l1, l2);
+        result = solution.addTwoNumbersUsingCarry(l1, l2);
         printNodes(result);
 
+        System.out.print("======WITHOUT CARRY======\n");
+        ListNode l3 = new ListNode(2);
+        l3 = insertNewNodeAtEnd(l3, 4);
+        l3 = insertNewNodeAtEnd(l3, 3);
+        printNodes(l3);
+
+        System.out.print("============\n");
+
+        ListNode l4 = new ListNode(5);
+        l4 = insertNewNodeAtEnd(l4, 6);
+        l4 = insertNewNodeAtEnd(l4, 4);
+        printNodes(l4);
+
+        System.out.print("============\n");
+
+        ListNode result1 = null;
+        result1 = solution.addTwoNumbersWithoutCarry(l3, l4);
+        printNodes(result1);
+
+        System.out.print("======SUM WITH CARRY======\n");
+        ListNode l5 = new ListNode(2);
+        l5 = insertNewNodeAtEnd(l5, 4);
+        l5 = insertNewNodeAtEnd(l5, 3);
+        printNodes(l5);
+
+        System.out.print("============\n");
+
+        ListNode l6 = new ListNode(5);
+        l6 = insertNewNodeAtEnd(l6, 6);
+        l6 = insertNewNodeAtEnd(l6, 4);
+        printNodes(l6);
+
+        System.out.print("============\n");
+
+        ListNode result2 = null;
+        result2 = solution.sumLinkedList(l5, l6);
+        printNodes(result2);
     }
 }
