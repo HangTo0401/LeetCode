@@ -65,8 +65,13 @@ public class LongestPalindromicSubstring {
         int startMax = 0, maxLen = 1;
         for(int end = 0; end < s.length(); end++) {
             for(int start = 0; start <= end; start++) {
+                if (start == end) {
+                    dp[start][end] =  true;
+                }
                 if(s.charAt(start) == s.charAt(end)) {
-                    if (end - start > 2) {
+                    if (start == end - 1) {
+                        dp[start][end] =  true;
+                    } else if (end - start > 2) {
                         dp[start][end] = dp[start + 1][end - 1];
                     } else {
                         dp[start][end] =  true;
