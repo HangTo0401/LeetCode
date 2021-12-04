@@ -134,7 +134,6 @@ public class ReverseInteger {
     public static void main(String[] args) {
         ReverseInteger solution = new ReverseInteger();
         System.out.println(solution.reverseInt(12));
-
         System.out.println(solution.reverseIntUsingPopPush(12));
     }
 }
