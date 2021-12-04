@@ -118,7 +118,7 @@ public class LongestPalindromicSubstring {
             expandRange(s, start, start +1); //If s.length is even then we have two middle point
         }
 
-        return s.substring(resultStart, resultStart+resultLength);
+        return s.substring(resultStart, resultStart + resultLength);
     }
 
     public static void main(String[] args) {
