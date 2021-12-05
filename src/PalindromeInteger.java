@@ -1,5 +1,3 @@
-package anotherPackage;
-
 public class PalindromeInteger {
     /**
      * EASY
