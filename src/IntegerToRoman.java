@@ -90,6 +90,33 @@ public class IntegerToRoman {
                   .replace("IIII", "IV");
     }
 
+    /**
+     * Approach 3: Using StringBuilder
+     * @param num
+     * @return String
+     * */
+    public String intToRomanUsingStringBuilder(int num) {
+        String[] roman = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        int[] nums = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        int i = 0;
+
+        StringBuilder stringbuilder = new StringBuilder();
+
+        while (num > 0 && i < nums.length) {
+            // Condition to check the given number range, if it is lower, just increment the iterator and get lower roman values
+            if (num < nums[i]) {
+                i++;
+                continue;
+            }
+
+            // Appending to stringbuilder at that current Roman value and removing the same value which is mapped in nums array
+            stringbuilder.append(roman[i]);
+            num = num - nums[i];
+        }
+
+        return stringbuilder.toString();
+    }
+
     public static void main(String[] args) {
         IntegerToRoman solution = new IntegerToRoman();
 
@@ -98,5 +125,8 @@ public class IntegerToRoman {
 
         // C2
         System.out.println(solution.intToRomanUsingReplace(4));
+
+        // C3
+        System.out.println(solution.intToRomanUsingStringBuilder(4));
     }
 }
