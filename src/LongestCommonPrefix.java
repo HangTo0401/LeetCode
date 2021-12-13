@@ -89,6 +89,53 @@ public class LongestCommonPrefix {
         return strs[0];
     }
 
+    /**
+     * Approach 3: Using Divide and Conquer
+     * To apply the observation above, we use divide and conquer technique,
+     * where we split the LCP(Si…Sj) problem into two subproblems LCP(Si…Smid) and LCP(Smid+1…Sj), where mid is (i + j)/2
+     * We use their solutions lcpLeft and lcpRight to construct the solution of the main problem LCP(Si…Sj).
+     * To accomplish this we compare one by one the characters of lcpLeft and lcpRight till there is no character match.
+     * The found common prefix of lcpLeft and lcpRight is the solution of the LCP(Si…Sj).
+     *
+     * Complexity Analysis
+     * In the worst case we have nn equal strings with length m
+     *
+     * Time complexity : O(S), where SS is the number of all characters in the array, S = m*n.
+     * Time complexity is 2*T(n/2)+O(m). Therefore time complexity is O(S).
+     * In the best case this algorithm performs O(minLen*n) comparisons, where minLen is the shortest string of the array
+     *
+     * Space complexity : O(m*logn)
+     * There is a memory overhead since we store recursive calls in the execution stack.
+     * There are logn recursive calls, each store need mm space to store the result, so space complexity is O(m*logn)
+     * @param strs
+     * @return String
+     * */
+    public String longestCommonPrefixUsingDivideAndConquer(String[] strs) {
+        if (strs == null || strs.length == 0) return "";
+        return longestCommonPrefix(strs, 0, strs.length - 1);
+    }
+
+    private String longestCommonPrefix(String[] strs, int left, int right) {
+        if (left == right) return strs[left];
+        else {
+            int mid = (left + right)/2;
+            String lcpLeft = longestCommonPrefix(strs, left, mid);
+            String lcpRight = longestCommonPrefix(strs, mid+1, right);
+            return commonPrefix(lcpLeft, lcpRight);
+        }
+    }
+
+    public String commonPrefix(String lcpLeft, String lcpRight) {
+        int minLen = Math.min(lcpLeft.length(), lcpRight.length());
+        for (int i = 0; i < minLen; i++) {
+            if (lcpLeft.charAt(i) != lcpRight.charAt(i)) {
+                return lcpLeft.substring(0, i);
+            }
+        }
+
+        return lcpLeft.substring(0, minLen);
+    }
+
     public static void main(String[] args) {
         LongestCommonPrefix solution = new LongestCommonPrefix();
         String[] strs = new String[]{"flower","flow","flight"};
@@ -98,5 +145,8 @@ public class LongestCommonPrefix {
 
         // C2
         System.out.println(solution.longestCommonPrefixUsingVerticalScanning(strs));
+
+        // C3
+        System.out.println(solution.longestCommonPrefixUsingDivideAndConquer(strs));
     }
 }
