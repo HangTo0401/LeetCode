@@ -136,7 +136,6 @@ public class LongestCommonPrefix {
         return lcpLeft.substring(0, minLen);
     }
 
-
     /**
      * Approach 4: Binary Search
      * The idea is to apply binary search method to find the string with maximum value L, which is common prefix of all of the strings.
@@ -183,6 +182,43 @@ public class LongestCommonPrefix {
         return true;
     }
 
+    /**
+     * Approach 5: Using StringBuilder
+     * The idea is to find the match between first and second string
+     * @param strs
+     * @return String
+     * */
+    public String longestCommonPrefixUsingStringBuilder(String[] strs) {
+        if(strs == null || strs.length == 0) return "";
+        if(strs.length == 1) return strs[0];
+
+        // Check match between first and second string
+        String result = returnMatch(strs[0], strs[1]);
+        if(result == "") return "";
+
+        // Check the rest of string with match
+        for(int i = 2; i < strs.length; i++){
+            String currentResult = returnMatch(strs[i], result);
+            if(currentResult =="") return "";
+            else result = currentResult;
+        }
+        return result;
+    }
+
+    public String returnMatch(String one, String two){
+        StringBuilder sb =  new StringBuilder();
+        int p1 = 0, p2 = 0;
+        while(p1 < one.length() && p2 < two.length()){
+            if(one.charAt(p1) == two.charAt(p2)){
+                sb.append(one.charAt(p1));
+                p1++;
+                p2++;
+            }
+            else break;
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         LongestCommonPrefix solution = new LongestCommonPrefix();
         String[] strs = new String[]{"flower","flow","flight"};
@@ -198,5 +234,8 @@ public class LongestCommonPrefix {
 
         // C4
         System.out.println(solution.longestCommonPrefixUsingBinarySearch(strs));
+
+        // C5
+        System.out.println(solution.longestCommonPrefixUsingStringBuilder(strs));
     }
 }
