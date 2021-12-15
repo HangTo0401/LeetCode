@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class ThreeSum {
     /**
      * MEDIUM
@@ -33,8 +35,15 @@ public class ThreeSum {
      * Hint 3: The second train of thought for two-sum is, without changing the array, can we use additional space somehow?
      * Like maybe a hash map to speed up the search?
      * */
+
+    /**
+     * 
+     * */
+    public List<List<Integer>> threeSum(int[] nums) {
+
+    }
     public static void main(String[] args) {
         ThreeSum solution = new ThreeSum();
-        
+
     }
 }
