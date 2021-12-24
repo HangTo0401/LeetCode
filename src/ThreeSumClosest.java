@@ -22,7 +22,7 @@ public class ThreeSumClosest {
      * -1000 <= nums[i] <= 1000
      * -104 <= target <= 104
      * */
-    public static int threeSum(int[] nums) {
+    public static int threeSumClosest(int[] nums, int target) {
         if (nums == null || nums.length < 3) return 0;
         Arrays.sort(nums);
 
@@ -30,14 +30,32 @@ public class ThreeSumClosest {
         int k = 0;
         int sum = 0;
         int closestSum = nums[0] + nums[1] + nums[2];
-        for (int i = 0; i < nums.length-2; i++) {
-            while (j < k) {
 
+        for (int i = 0; i < nums.length-2; i++) {
+
+            //Using two pointers
+            j = i + 1;
+            k = nums.length -1;
+            while (j < k) {
+                sum = nums[i] + nums[j] + nums[k];
+                if (Math.abs(sum - target) < Math.abs(closestSum - target)) {
+                    closestSum = sum;
+                }
+                if (sum < target) {
+                    j++;
+                } else {
+                    k--;
+                }
             }
         }
+
+        return closestSum;
     }
 
     public static void main(String[] args) {
+        ThreeSumClosest solution = new ThreeSumClosest();
 
+        int[] nums = new int[]{-1, 2, 1, -4};
+        System.out.println(solution.threeSumClosest(nums, 1));
     }
 }
