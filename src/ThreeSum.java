@@ -40,6 +40,7 @@ public class ThreeSum {
     /**
      * Approach 1: Using Hashset and Two pointers
      * @param nums
+     * @return List<List<Integer>>
      * */
     public List<List<Integer>> threeSum(int[] nums) {
         if(nums.length==0 || nums==null) return new ArrayList<>();
@@ -72,6 +73,7 @@ public class ThreeSum {
      * Approach 2: Using TwoSum method
      * Time complexity is still O(N^2)
      * @param nums
+     * @return List<List<Integer>>
      * */
     public static List<List<Integer>> threeSumUsingTwoSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
