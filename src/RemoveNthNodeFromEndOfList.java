@@ -64,13 +64,46 @@ public class RemoveNthNodeFromEndOfList {
         return head;
     }
 
+    /**
+     * Approach 2: Use one loop
+     * */
+    public ListNode removeNthFromEndWithOneLoop(ListNode head, int n) {
+        head = new ListNode(0, head);
+        ListNode slow = head; // first pointer
+        ListNode fast = head; // second pointer
+
+        while (fast != null) {
+            fast = fast.next;
+            if (n-- > 0) continue;
+
+            // If fast is null, then slow.next node is Nth node we need to remove
+            // So we have to move the pointer to slow.next.next
+            if (fast == null) {
+                slow.next = slow.next.next;
+            }
+            slow = slow.next;
+        }
+
+        return head.next;
+    }
+
     public static void main(String[] args) {
         RemoveNthNodeFromEndOfList solution = new RemoveNthNodeFromEndOfList();
+
+        // C1
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
         solution.removeNthFromEnd(head, 2);
+
+        // C2
+        ListNode head1 = new ListNode(1);
+        head1.next = new ListNode(2);
+        head1.next.next = new ListNode(3);
+        head1.next.next.next = new ListNode(4);
+        head1.next.next.next.next = new ListNode(5);
+        solution.removeNthFromEndWithOneLoop(head1, 2);
     }
 }
